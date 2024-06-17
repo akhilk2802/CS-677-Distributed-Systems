@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package stocktrading;
+
+service StockTrading {
+  rpc Lookup(LookupRequest) returns (LookupResponse);
+  rpc Trade(TradeRequest) returns (TradeResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+}
+
+message LookupRequest {
+  string stock_name = 1;
+}
+
+message LookupResponse {
+  double price = 1;
+  int32 volume = 2;
+}
+
+message TradeRequest {
+  string stock_name = 1;
+  int32 quantity = 2;
+  string type = 3; // "buy" or "sell"
+}
+
+message TradeResponse {
+  int32 status = 1; // 1 for success, 0 for suspended, -1 for invalid stock
+}
+
+message UpdateRequest {
+  string stock_name = 1;
+  double price = 2;
+}
+
+message UpdateResponse {
+  int32 status = 1; // 1 for success, -1 for invalid stock, -2 for invalid price
+}
